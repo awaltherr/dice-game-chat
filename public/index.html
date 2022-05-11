@@ -10,12 +10,15 @@
 
 <body>
     <div id="container"></div>
+    <div class="message-container">
+        <ul id="messages"></ul>
+    </div>
     <form id="send-message">
         <input type="text" id="message" placeholder="Aa">
-        <button type="submit" id="send">Skicka</button>
+        <button type="submit" id="submit">Skicka</button>
     </form>
 
-    <script src="socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="main.js"></script>
 </body>
 
