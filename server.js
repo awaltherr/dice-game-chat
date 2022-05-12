@@ -1,38 +1,32 @@
-const express = require('express');
+const express = require("express");
+const path = require('path');
 const app = express();
 const http = require('http');
-const path = require('path');
-const {
-    Server
-} = require('socket.io');
-const fs = require('fs')
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+const port = 3000;
 
-const server = http.createServer(function (req, res) {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    })
-    fs.readFile('index.html', function (error, data) {
-        if (error) {
-            res.writeHead(404)
-            res.write('Error: File Not Found')
-        } else {
-            res.write(data)
-        }
-        res.end()
-    })
-});
-
-const io = new Server(server)
+const user = {}
 
 app.use(express.static(path.join(__dirname + '/public')));
 
-io.on('connection', socket => {
-    console.log('New User Connection...');
-    socket.emit('message', 'Välkommen till oss!');
+io.on('connection', (socket) => {
+    console.log(`User with id ${socket.id} joined to the chat!`);
+
+    socket.on('new-connection', userName => {
+        user[socket.id] = userName
+        socket.broadcast.emit('connected', userName)
+    })
+
+    socket.on('send-message', message => {
+        socket.broadcast.emit('message', message)
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`User with id ${socket.id} left the chat!`);
+    });
 });
 
-const PORT = 3000;
-
-app.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT)
-})
+server.listen(port, () => {
+    console.log(`Socket.IO server running at http://localhost:${port}/`);
+});

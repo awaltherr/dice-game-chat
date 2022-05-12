@@ -9,13 +9,10 @@
 </head>
 
 <body>
-    <div id="container"></div>
-    <div class="message-container">
-        <ul id="messages"></ul>
-    </div>
-    <form id="send-message">
-        <input type="text" id="message" placeholder="Aa">
-        <button type="submit" id="submit">Skicka</button>
+    <div id="messages"></div>
+    <form id="send-container">
+        <input type="text" id="inputMessage" placeholder="Aa">
+        <button type="submit" id="send">Skicka meddelande</button>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
