@@ -8,16 +8,21 @@ showMessages('Välkommen! Du är nu ansluten till chatten!')
 socket.emit('new-connection', userName)
 
 socket.on('message', data => {
-    showMessages(data);
+    showMessages(`${data.userName}: ${data.message}`);
 });
 
 socket.on('connected', userName => {
-    showMessages(`${userName} har anslutit til chatten`);
+    showMessages(`${userName} har anslutit till chatten`);
+});
+
+socket.on('disconnected', userName => {
+    showMessages(`${userName} har lämnat chatten`);
 });
 
 messageForm.addEventListener('submit', e => {
     e.preventDefault();
     const message = inputMessage.value;
+    showMessages(`Du: ${message}`)
     socket.emit('send-message', message)
     inputMessage.value = '';
 })

@@ -19,10 +19,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send-message', message => {
-        socket.broadcast.emit('message', message)
+        socket.broadcast.emit('message', {
+            message: message,
+            userName: user[socket.id]
+        })
     });
 
     socket.on('disconnect', () => {
+        socket.broadcast.emit('disconnected', user[socket.id])
+        delete user[socket.id]
         console.log(`User with id ${socket.id} left the chat!`);
     });
 });
