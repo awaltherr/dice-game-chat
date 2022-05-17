@@ -2,6 +2,7 @@ const socket = io();
 const messageForm = document.getElementById('send-container');
 const messageContainer = document.getElementById('messages')
 const inputMessage = document.getElementById('inputMessage');
+const rollDice = document.getElementById('roll');
 
 const userName = prompt('Vänligen skriv ditt användarnamn.')
 showMessages('Välkommen! Du är nu ansluten till chatten!')
@@ -25,6 +26,13 @@ messageForm.addEventListener('submit', e => {
     showMessages(`Du: ${message}`)
     socket.emit('send-message', message)
     inputMessage.value = '';
+})
+
+rollDice.addEventListener('click', e => {
+    e.preventDefault();
+    const randomNumber = Math.floor(Math.random() * 6) + 1;
+    showMessages(`Du: Du kastade tärningen och fick värdet: ${randomNumber}`)
+    socket.emit('send-message', randomNumber);
 })
 
 function showMessages(message) {
