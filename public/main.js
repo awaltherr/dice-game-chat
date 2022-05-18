@@ -12,6 +12,7 @@ socket.on('message', data => {
     showMessages(`${data.userName}: ${data.message}`);
 });
 
+
 socket.on('connected', userName => {
     showMessages(`${userName} har anslutit till chatten`);
 });
