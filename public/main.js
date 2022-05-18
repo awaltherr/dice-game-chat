@@ -36,7 +36,7 @@ rollDice.addEventListener('click', e => {
 })
 
 function showMessages(message) {
-    const messageElement = document.createElement('div')
+    const x = document.createElement('div')
     messageElement.innerText = message
     messageContainer.append(messageElement);
 }
